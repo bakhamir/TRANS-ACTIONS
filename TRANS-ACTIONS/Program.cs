@@ -8,7 +8,7 @@ namespace TRANS_ACTIONS
         {
             Console.WriteLine("Hello, World!");
             TRANSTEst  tran = new TRANSTEst();
-            tran.TransactionTask1();
+            tran.Error();
         }
     }
     class TRANSTEst
@@ -86,6 +86,34 @@ namespace TRANS_ACTIONS
                     tran.Rollback();
                 }
 
+
+                db.Close();
+            }
+        }
+        public void Error()
+        {
+            using (SqlConnection db = new SqlConnection(ConStr))
+            {
+                db.Open();
+                try
+                {
+                    Program program;
+                    program.ToString();
+                    Int32.Parse("aaaaaa");
+                    using (SqlCommand cmd = new SqlCommand($"INSERT INTO [dbo].[test] VALUES {1}  {10}"))
+                    {
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("ok");
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);   
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 db.Close();
             }
